@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://hadoop05:9000</value>
+    </property>
+    <!--在本地提交到集群执行的时候，需要用到下方的配置-->
+    <!--<property>-->
+        <!--<name>mapreduce.framework.name</name>-->
+        <!--<value>yarn</value>-->
+    <!--</property>-->
+    <!--<property>-->
+        <!--<name>yarn.resourcemanager.address</name>-->
+        <!--<value>hadoop01:8032</value>-->
+    <!--</property>-->
+    <!--&lt;!&ndash;是否允许作业跨平台提交&ndash;&gt;-->
+    <!--<property>-->
+        <!--<name>mapreduce.app-submission.cross-platform</name>-->
+        <!--<value>true</value>-->
+    <!--</property>-->
+</configuration>
