@@ -1,5 +1,6 @@
 package com.sixth.util;
 
+import com.sixth.common.DateEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.ParseException;
@@ -93,5 +94,45 @@ public class TimeUtil {
             e.printStackTrace();
         }
         return dt.getTime();
+    }
+
+    public static int getDateInfo(long time, DateEnum type) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        if (type.equals(DateEnum.YEAR)) {
+            return calendar.get(Calendar.YEAR);
+        }
+        if (type.equals(DateEnum.SEASON)) {
+            int month = calendar.get(Calendar.MONDAY);
+            return month % 3 == 0 ? month / 3 : (month / 3 + 1);
+        }
+        if (type.equals(DateEnum.MONTH)) {
+            return calendar.get(Calendar.MONDAY);
+        }
+        if (type.equals(DateEnum.WEEK)) {
+            return calendar.get(Calendar.WEEK_OF_YEAR);
+        }
+        if (type.equals(DateEnum.DAY)) {
+            return calendar.get(Calendar.DAY_OF_MONTH);
+        }
+        if (type.equals(DateEnum.HOUR)) {
+            return calendar.get(Calendar.HOUR_OF_DAY);
+        }
+        throw new RuntimeException("不支持该类型的日期信息获取.type" + type.dateType);
+    }
+
+    /*
+     * 获取周第一天时间戳
+     * */
+    public static long getFirstDayOfWeek(long time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        // 设置
+        calendar.set(Calendar.DAY_OF_WEEK, 1); // 该周的第一天
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTimeInMillis();
     }
 }

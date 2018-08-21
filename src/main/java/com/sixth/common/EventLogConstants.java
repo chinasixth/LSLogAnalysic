@@ -9,11 +9,13 @@ public class EventLogConstants {
 
     /*
     * 事件的枚举
+    * 定义一个枚举类
     * */
     public enum EventEnum{
+        // 限定枚举的几种类型，当选定一种类型的时候，就将使用后面的参数来实例化这个枚举类
         LAUNCH(1, "launch event", "e_l"),
         PAGEVIEW(2, "page view event", "e_pv"),
-        CHARTREQUEST(3, "charge request event", "e_crt"),
+        CHARGEREQUEST(3, "charge request event", "e_crt"),
         CHARGESUCCESS(4, "charge success event", "e_cs"),
         CHARGEREFUND(5, "charge refund event", "e_cr"),
         EVENT(6, "event", "e_e");

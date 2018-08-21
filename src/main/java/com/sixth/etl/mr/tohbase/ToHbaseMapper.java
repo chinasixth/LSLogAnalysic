@@ -44,7 +44,7 @@ public class ToHbaseMapper extends Mapper<Object, Text, NullWritable, Put> {
         switch (event) {
             case LAUNCH:
             case PAGEVIEW:
-            case CHARTREQUEST:
+            case CHARGEREQUEST:
             case CHARGESUCCESS:
             case CHARGEREFUND:
             case EVENT:

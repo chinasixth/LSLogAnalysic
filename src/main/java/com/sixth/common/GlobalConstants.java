@@ -7,5 +7,6 @@ package com.sixth.common;
  */
 public class GlobalConstants {
     public static final String RUNNING_DATE= "running date";
-
+    public static final String DEFAULT_VALUE = "unknown";
+    public static final String ALL_OF_VALUE = "all";
 }

@@ -57,6 +57,7 @@ public class ToHbaseRunner implements Tool {
         // 也有本地提交集群运行：true，默认是true
         // 如果要放到集群上运行，需要将false设置为true
 //        TableMapReduceUtil.initTableReducerJob(EventLogConstants.HBASE_TABLE_NAME, null, job);
+        // TableMapReduceUtil是专门用来处理hbase的mapreduce的工具类
         TableMapReduceUtil.initTableReducerJob(EventLogConstants.HBASE_TABLE_NAME,
                 null, job, null, null, null, null, false);
 
