@@ -8,6 +8,6 @@ import org.apache.hadoop.io.Writable;
  * @ Date   ：Created in 14:38 2018/8/20
  * @ map和reduce阶段输出的value的顶级父类
  */
-public abstract class BaseOutputValueWriable implements Writable {
+public abstract class BaseOutputValueWritable implements Writable {
     public abstract KpiType getKpi();
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+    <property>
+        <name>total_new_total_user</name>
+        <value>
+            select `platform_dimension_id`,`total_install_users` from `stats_user` where `date_dimension_id` = ?
+        </value>
+    </property>
+    <property>
+        <name>total_new_user</name>
+        <value>
+            select `platform_dimension_id`,`new_install_users` from `stats_user` where `date_dimension_id` = ?
+        </value>
+    </property>
+    <property>
+        <name>total_new_update_user</name>
+        <value>
+            insert into `stats_user`()
+        </value>
+    </property>
+</configuration>

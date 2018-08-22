@@ -1,6 +1,6 @@
 package com.sixth.analysic.model.dim.value.reduce;
 
-import com.sixth.analysic.model.dim.value.BaseOutputValueWriable;
+import com.sixth.analysic.model.dim.value.BaseOutputValueWritable;
 import com.sixth.common.KpiType;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.WritableUtils;
@@ -14,7 +14,7 @@ import java.io.IOException;
  * @ Date   ：Created in 14:56 2018/8/20
  * @ 用户模块和浏览器模块reduce输出value的类型
  */
-public class TextOutputValue extends BaseOutputValueWriable {
+public class TextOutputValue extends BaseOutputValueWritable {
     private KpiType kpi;
     private MapWritable value = new MapWritable();
 
@@ -50,5 +50,4 @@ public class TextOutputValue extends BaseOutputValueWriable {
         WritableUtils.readEnum(dataInput, KpiType.class);
         this.value.readFields(dataInput);
     }
-
 }

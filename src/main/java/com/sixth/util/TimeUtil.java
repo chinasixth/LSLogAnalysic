@@ -116,7 +116,7 @@ public class TimeUtil {
             return calendar.get(Calendar.DAY_OF_MONTH);
         }
         if (type.equals(DateEnum.HOUR)) {
-            return calendar.get(Calendar.HOUR_OF_DAY);
+            return calendar.get(Calendar.HOUR_OF_DAY) + 1;
         }
         throw new RuntimeException("不支持该类型的日期信息获取.type" + type.dateType);
     }

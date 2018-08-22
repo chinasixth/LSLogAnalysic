@@ -6,7 +6,9 @@ package com.sixth.common;
  * @ kpi的枚举，新增的用户、订单数量等指标
  */
 public enum KpiType {
+    // 忽略其他条件，只统计新增用户
     NEW_USER("new_user"),
+    // 按照浏览器分类统计用户
     BROWSER_NEW_USER("browser_new_user");
 
     public String kpiName; // 属性

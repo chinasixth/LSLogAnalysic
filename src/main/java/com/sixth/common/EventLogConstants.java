@@ -13,11 +13,18 @@ public class EventLogConstants {
     * */
     public enum EventEnum{
         // 限定枚举的几种类型，当选定一种类型的时候，就将使用后面的参数来实例化这个枚举类
+        // launch事件，第一次访问网站的时候触发，可以用来统计新增用户
         LAUNCH(1, "launch event", "e_l"),
+        // pageView事件，当用于访问页面或者刷新页面的时候触发该事件，
+        // 这个事件会记录很多的日志信息，比如ip，浏览器信息等
         PAGEVIEW(2, "page view event", "e_pv"),
+        // 当用户下订单的时候触发该事件
         CHARGEREQUEST(3, "charge request event", "e_crt"),
+        // 订单成功时触发
         CHARGESUCCESS(4, "charge success event", "e_cs"),
+        // 撤销订单时触发
         CHARGEREFUND(5, "charge refund event", "e_cr"),
+        // 当用户访问定制业务时，会触发该事件
         EVENT(6, "event", "e_e");
 
         public final int id; // 事件的id

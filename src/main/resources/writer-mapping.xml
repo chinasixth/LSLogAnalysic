@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+    <property>
+        <name>writer_new_user</name>
+        <value>com.sixth.analysic.mr.nu.NewUserWriter</value>
+    </property>
+</configuration>

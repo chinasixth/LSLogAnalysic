@@ -81,7 +81,6 @@ public class StatsUserDimension extends BaseStatsDimension {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(browserDimension, statsCommonDimension);
     }
 
