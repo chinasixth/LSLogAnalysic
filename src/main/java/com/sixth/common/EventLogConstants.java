@@ -96,7 +96,7 @@ public class EventLogConstants {
 
     public static final String EVENT_COLUMN_NAME_ORDER_NAME = "on";
 
-    public static final String EVENT_COLUMN_NAME_CURRENCY_AMOUTN = "cua";
+    public static final String EVENT_COLUMN_NAME_CURRENCY_AMOUNT = "cua";
 
     public static final String EVENT_COLUMN_NAME_CURRENCY_TYPE = "cut";
 

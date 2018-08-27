@@ -6,7 +6,7 @@ import com.sixth.analysic.mr.service.IDimensionConvert;
 import com.sixth.analysic.mr.service.impl.IDimensionConvertImpl;
 import com.sixth.common.GlobalConstants;
 import com.sixth.common.KpiType;
-import com.sixth.etl.util.JdbcUtil;
+import com.sixth.util.JdbcUtil;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter;

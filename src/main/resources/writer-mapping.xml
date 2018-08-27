@@ -6,4 +6,63 @@
         <name>writer_new_user</name>
         <value>com.sixth.analysic.mr.nu.NewUserWriter</value>
     </property>
+    <property>
+        <name>writer_browser_new_user</name>
+        <value>com.sixth.analysic.mr.nu.NewBrowserUserWriter</value>
+    </property>
+
+    <property>
+        <name>writer_active_user</name>
+        <value>com.sixth.analysic.mr.au.ActiveUserWriter</value>
+    </property>
+    <property>
+        <name>writer_browser_active_user</name>
+        <value>com.sixth.analysic.mr.au.ActiveUserWriter</value>
+    </property>
+
+    <property>
+        <name>writer_active_member</name>
+        <value>com.sixth.analysic.mr.am.ActiveMemberWriter</value>
+    </property>
+    <property>
+        <name>writer_browser_active_member</name>
+        <value>com.sixth.analysic.mr.am.ActiveMemberWriter</value>
+    </property>
+
+    <property>
+        <name>writer_new_member</name>
+        <value>com.sixth.analysic.mr.nm.NewMemberWriter</value>
+    </property>
+    <property>
+        <name>writer_browser_new_member</name>
+        <value>com.sixth.analysic.mr.nm.NewMemberWriter</value>
+    </property>
+    <property>
+        <name>writer_member_info</name>
+        <value>com.sixth.analysic.mr.nm.NewMemberWriter</value>
+    </property>
+
+    <property>
+        <name>writer_session</name>
+        <value>com.sixth.analysic.mr.session.SessionWriter</value>
+    </property>
+    <property>
+        <name>writer_browser_session</name>
+        <value>com.sixth.analysic.mr.session.SessionWriter</value>
+    </property>
+
+    <property>
+        <name>writer_hourly_active_user</name>
+        <value>com.sixth.analysic.mr.au.ActiveUserWriter</value>
+    </property>
+
+    <property>
+        <name>writer_browser_pageview</name>
+        <value>com.sixth.analysic.mr.pv.PvWriter</value>
+    </property>
+
+    <property>
+        <name>writer_local</name>
+        <value>com.sixth.analysic.mr.local.LocalWriter</value>
+    </property>
 </configuration>

@@ -1,7 +1,6 @@
-package com.sixth.analysic.model.dim.base;
+package com.sixth.analysic.model.dim;
 
-import com.sixth.analysic.model.dim.BaseStatsDimension;
-import com.sixth.analysic.model.dim.StatsCommonDimension;
+import com.sixth.analysic.model.dim.base.*;
 
 import java.io.DataInput;
 import java.io.DataOutput;

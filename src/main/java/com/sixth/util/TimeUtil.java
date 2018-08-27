@@ -47,8 +47,8 @@ public class TimeUtil {
     /*
      * 指定格式
      * */
-    public static String getYesterday(String parrern) {
-        SimpleDateFormat sdf = new SimpleDateFormat(parrern);
+    public static String getYesterday(String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -1);
 

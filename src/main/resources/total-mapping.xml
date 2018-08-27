@@ -17,7 +17,38 @@
     <property>
         <name>total_new_update_user</name>
         <value>
-            insert into `stats_user`()
+            insert into `stats_user`(
+            `date_dimension_id`,
+            `platform_dimension_id`,
+            `total_install_users`,
+            `created`
+            )
+            values(?,?,?,?) ON DUPLICATE KEY UPDATE `total_install_users` = ?
+        </value>
+    </property>
+
+    <property>
+        <name>total_new_total_member</name>
+        <value>
+            select `platform_dimension_id`,`total_members` from `stats_user` where `date_dimension_id` = ?
+        </value>
+    </property>
+    <property>
+        <name>total_new_member</name>
+        <value>
+            select `platform_dimension_id`,`new_members` from `stats_user` where `date_dimension_id` = ?
+        </value>
+    </property>
+    <property>
+        <name>total_new_update_member</name>
+        <value>
+            insert into `stats_user`(
+            `date_dimension_id`,
+            `platform_dimension_id`,
+            `total_members`,
+            `created`
+            )
+            values(?,?,?,?) ON DUPLICATE KEY UPDATE `total_members` = ?
         </value>
     </property>
 </configuration>

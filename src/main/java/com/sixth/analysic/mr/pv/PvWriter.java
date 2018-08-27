@@ -1,4 +1,4 @@
-package com.sixth.analysic.mr.nu;
+package com.sixth.analysic.mr.pv;
 
 import com.sixth.analysic.model.dim.BaseStatsDimension;
 import com.sixth.analysic.model.dim.StatsUserDimension;
@@ -9,38 +9,36 @@ import com.sixth.analysic.mr.service.IDimensionConvert;
 import com.sixth.common.GlobalConstants;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
  * @ Author ：liuhao
- * @ Date   ：Created in 14:20 2018/8/21
+ * @ Date   ：Created in 14:23 2018/8/25
  * @
  */
-public class NewUserWriter implements IOutputWriter {
+public class PvWriter implements IOutputWriter {
+    private static final Logger LOGGER = Logger.getLogger(PvWriter.class);
 
     @Override
     public void writer(Configuration conf, BaseStatsDimension key, BaseOutputValueWritable value, PreparedStatement ps, IDimensionConvert convert) {
         StatsUserDimension statsUserDimension = (StatsUserDimension) key;
         TextOutputValue textOutputValue = (TextOutputValue) value;
-        int newUser = ((IntWritable) textOutputValue.getValue().get(new IntWritable(-1))).get();
+        int i = 0;
         try {
-            //
-            int i = 0;
+            int pv = ((IntWritable) textOutputValue.getValue().get(new IntWritable(-1))).get();
+            System.out.println("手动打印pv: " + pv);
             ps.setInt(++i, convert.getDimensionByValue(statsUserDimension.getStatsCommonDimension().getDateDimension()));
             ps.setInt(++i, convert.getDimensionByValue(statsUserDimension.getStatsCommonDimension().getPlatformDimension()));
-            ps.setInt(++i, newUser);
+            ps.setInt(++i, convert.getDimensionByValue(statsUserDimension.getBrowserDimension()));
+            ps.setInt(++i, pv);
             ps.setString(++i, conf.get(GlobalConstants.RUNNING_DATE));
-            ps.setInt(++i, newUser);
-
-            //添加到批处理中
+            ps.setInt(++i, pv);
             ps.addBatch();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.warn("在pageview指标的writer方法中，为ps赋值失败");
         }
-
-//        ps.setString(++i, conf.get()));
-//        ps.setInt(++i, );
     }
 }

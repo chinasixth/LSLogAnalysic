@@ -15,11 +15,10 @@ import java.sql.SQLException;
 
 /**
  * @ Author ：liuhao
- * @ Date   ：Created in 14:20 2018/8/21
+ * @ Date   ：Created in 8:35 2018/8/23
  * @
  */
-public class NewUserWriter implements IOutputWriter {
-
+public class NewBrowserUserWriter implements IOutputWriter {
     @Override
     public void writer(Configuration conf, BaseStatsDimension key, BaseOutputValueWritable value, PreparedStatement ps, IDimensionConvert convert) {
         StatsUserDimension statsUserDimension = (StatsUserDimension) key;
@@ -30,6 +29,7 @@ public class NewUserWriter implements IOutputWriter {
             int i = 0;
             ps.setInt(++i, convert.getDimensionByValue(statsUserDimension.getStatsCommonDimension().getDateDimension()));
             ps.setInt(++i, convert.getDimensionByValue(statsUserDimension.getStatsCommonDimension().getPlatformDimension()));
+            ps.setInt(++i, convert.getDimensionByValue(statsUserDimension.getBrowserDimension()));
             ps.setInt(++i, newUser);
             ps.setString(++i, conf.get(GlobalConstants.RUNNING_DATE));
             ps.setInt(++i, newUser);
@@ -39,8 +39,5 @@ public class NewUserWriter implements IOutputWriter {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-//        ps.setString(++i, conf.get()));
-//        ps.setInt(++i, );
     }
 }

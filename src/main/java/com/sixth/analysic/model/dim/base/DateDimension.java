@@ -153,7 +153,7 @@ public class DateDimension extends BaseDimension {
 
         int day = TimeUtil.getDateInfo(time, DateEnum.DAY);
         if (type.equals(DateEnum.DAY)) {
-            calendar.set(year, month - 1, day);
+            calendar.set(year, month, day);
             return new DateDimension(year, season, month, week, 0, type.dateType, calendar.getTime());
         }
         throw new RuntimeException("暂不支持该时间枚举类型的时间维度获取. type: " + type.dateType);

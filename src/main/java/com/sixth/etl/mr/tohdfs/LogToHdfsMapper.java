@@ -80,7 +80,7 @@ public class LogToHdfsMapper extends Mapper<Object,Text,NullWritable,LogDataWrit
                 ld.oid  =info.get(EventLogConstants.EVENT_COLUMN_NAME_ORDER_ID);
                 ld.on  =info.get(EventLogConstants.EVENT_COLUMN_NAME_ORDER_NAME);
                 ld.cut  =info.get(EventLogConstants.EVENT_COLUMN_NAME_CURRENCY_TYPE);
-                ld.cua  =info.get(EventLogConstants.EVENT_COLUMN_NAME_CURRENCY_AMOUTN);
+                ld.cua  =info.get(EventLogConstants.EVENT_COLUMN_NAME_CURRENCY_AMOUNT);
                 ld.pt  =info.get(EventLogConstants.EVENT_COLUMN_NAME_PAYMENT_TYPE);
                 ld.ca  =info.get(EventLogConstants.EVENT_COLUMN_NAME_EVENT_CATEGORY);
                 ld.ac  =info.get(EventLogConstants.EVENT_COLUMN_NAME_EVENT_ACTION);

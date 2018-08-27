@@ -16,18 +16,18 @@
         </repository>
 
         <!-- nexus私服配置 -->
-        <!--<repository>-->
-            <!--<id>nexus</id>-->
-            <!--<name>Nexus Repository</name>-->
-            <!--<url>http://10.0.88.249:8081/nexus/content/groups/public/</url>-->
-            <!--<releases>-->
-                <!--<enabled>true</enabled>-->
-            <!--</releases>-->
-            <!--&lt;!&ndash;snapshots默认是关闭的,需要开启  &ndash;&gt;-->
-            <!--<snapshots>-->
-                <!--<enabled>true</enabled>-->
-            <!--</snapshots>-->
-        <!--</repository>-->
+        <repository>
+            <id>nexus</id>
+            <name>Nexus Repository</name>
+            <url>http://10.0.88.249:8081/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <!--snapshots默认是关闭的,需要开启  -->
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <!--版本属性-->
@@ -87,8 +87,8 @@
         <!--打包插件-->
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 <configuration>
                     <source>1.8</source>  <!-- 默认是1.5,不能写成1.7.0 -->
                     <target>1.8</target>

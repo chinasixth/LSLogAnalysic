@@ -1,4 +1,4 @@
-package com.sixth.etl.util;
+package com.sixth.util;
 
 import com.sixth.common.GlobalConstants;
 

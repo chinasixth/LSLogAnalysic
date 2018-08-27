@@ -1,6 +1,6 @@
 package com.sixth.analysic.mr.nu;
 
-import com.sixth.analysic.model.dim.base.StatsUserDimension;
+import com.sixth.analysic.model.dim.StatsUserDimension;
 import com.sixth.analysic.model.dim.value.map.TimeOutputValue;
 import com.sixth.analysic.model.dim.value.reduce.TextOutputValue;
 import com.sixth.common.KpiType;
@@ -52,14 +52,17 @@ public class NewUserReducer extends Reducer<StatsUserDimension, TimeOutputValue,
         map.put(new IntWritable(-1), new IntWritable(this.unique.size()));
         this.v.setValue(map);
         // 设置kpi
-//        if (key.getStatsCommonDimension()
-//                .getKpiDimension()
-//                .getKpiName()
-//                .equals(KpiType.valueOfType(KpiType.NEW_USER.kpiName))) {
-//            this.v.setKpi(KpiType.NEW_USER);
-//        }
-        if(key.getStatsCommonDimension().getKpiDimension().getKpiName().equals(KpiType.NEW_USER.kpiName)){
+        if(key.getStatsCommonDimension()
+                .getKpiDimension()
+                .getKpiName()
+                .equals(KpiType.NEW_USER.kpiName)){
             this.v.setKpi(KpiType.NEW_USER);
+        } else if(key.getStatsCommonDimension()
+                .getKpiDimension()
+                .getKpiName()
+                .equals(KpiType.BROWSER_NEW_USER.kpiName)
+                ){
+            this.v.setKpi(KpiType.BROWSER_NEW_USER);
         }
         // 输出
         context.write(key, v);

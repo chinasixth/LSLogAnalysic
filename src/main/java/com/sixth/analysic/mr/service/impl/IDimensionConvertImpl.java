@@ -2,7 +2,7 @@ package com.sixth.analysic.mr.service.impl;
 
 import com.sixth.analysic.model.dim.base.*;
 import com.sixth.analysic.mr.service.IDimensionConvert;
-import com.sixth.etl.util.JdbcUtil;
+import com.sixth.util.JdbcUtil;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -52,6 +52,12 @@ public class IDimensionConvertImpl implements IDimensionConvert {
             if (dimension instanceof DateDimension) {
                 sqls = buildDateSqls(dimension);
             }
+            if (dimension instanceof LocationDimension) {
+                sqls = buildLocalSqls(dimension);
+            }
+            if (dimension instanceof EventDimension) {
+                sqls = buildEventSqls(dimension);
+            }
             // 执行sql
             id = -1;
             synchronized (this) {
@@ -61,9 +67,8 @@ public class IDimensionConvertImpl implements IDimensionConvert {
             this.cache.put(cacheKey, id);
             return id;
         } catch (Exception e) {
-            LOGGER.warn("获取维度id异常", e);
+            LOGGER.warn("warn: 获取维度id异常", e);
         }
-
         throw new RuntimeException("获取维度id异常");
     }
 
@@ -76,7 +81,7 @@ public class IDimensionConvertImpl implements IDimensionConvert {
             this.setArgs(dimension, ps);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getInt("id");
+                return rs.getInt(1);
             }
             // 没有查询到对应的id
             // 在插入的时候返回生成的主键，也就是key
@@ -85,11 +90,12 @@ public class IDimensionConvertImpl implements IDimensionConvert {
             ps.executeUpdate();
             // 和上面的配合使用，这样的话，就避免了插入以后还要操作
             rs = ps.getGeneratedKeys();
-            return rs.getInt(1);
-
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
         } catch (SQLException e) {
             LOGGER.warn("执行sql异常", e);
-        }finally {
+        } finally {
             JdbcUtil.close(conn, ps, rs);
         }
         throw new RuntimeException("执行sql语句时运行异常");
@@ -124,9 +130,32 @@ public class IDimensionConvertImpl implements IDimensionConvert {
                 ps.setString(++i, date.getType());
                 ps.setDate(++i, new Date(date.getCalendar().getTime()));
             }
+            if (dimension instanceof LocationDimension) {
+                LocationDimension local = (LocationDimension) dimension;
+                ps.setString(++i, local.getCountry());
+                ps.setString(++i, local.getProvince());
+                ps.setString(++i, local.getCity());
+            }
+            if (dimension instanceof EventDimension) {
+                EventDimension event = (EventDimension) dimension;
+                ps.setString(++i, event.getCategory());
+                ps.setString(++i, event.getAction());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private String[] buildEventSqls(BaseDimension dimension) {
+        String query = "select id from `dimension_event` where `category` = ? and `action` = ?";
+        String insert = "insert into `dimension_event`(`category`,`action`) values(?,?)";
+        return new String[]{query, insert};
+    }
+
+    private String[] buildLocalSqls(BaseDimension dimension) {
+        String query = "select id from `dimension_location` where `country` = ? and `province` = ? and  `city` = ?";
+        String insert = "insert into `dimension_location`(`country`,`province`,`city`) values(?,?,?)";
+        return new String[]{query, insert};
     }
 
     private String[] buildDateSqls(BaseDimension dimension) {
@@ -188,6 +217,19 @@ public class IDimensionConvertImpl implements IDimensionConvert {
             sb.append(date.getWeek());
             sb.append(date.getDay());
             sb.append(date.getType());
+        }
+        if (dimension instanceof LocationDimension) {
+            LocationDimension local = (LocationDimension) dimension;
+            sb.append("local_");
+            sb.append(local.getCountry());
+            sb.append(local.getProvince());
+            sb.append(local.getCity());
+        }
+        if (dimension instanceof EventDimension) {
+            EventDimension event = (EventDimension) dimension;
+            sb.append("local_");
+            sb.append(event.getCategory());
+            sb.append(event.getAction());
         }
         return sb.toString();
     }
