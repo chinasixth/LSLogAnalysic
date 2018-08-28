@@ -1,39 +1,31 @@
-用户浏览深度分析：
-一个用户访问了几个url，访问的url个数就是浏览器深度，然后将深度相同的uid进行count，就得到深度为1的uid个数……
+#!/bin/bash
 
-数据抽取(只抽取该模块中需要的字段即可)；
-load data inpath '' into table logs partition(month=08,day=18)
+dt=''
+until [ $# -eq 0 ]
+do
+if[ $1'x' = '-dx' ]
+then
+shift
+dt=$1
+fi
+shift
+done
 
-考虑是否需要udf函数
+month=''
+day=''
 
+if [ $[#dt] = 10 ]
+then
+echo "dt:$dt"
+else
+dt=`date -d "1 day age" "+%y-%m-d%"`
+month=`date -d "$dt" "+%m"`
+day=`date -d "$dt" "+%d"`
+echo "running date is $dt, month is $month, day is $day"
+echo "runnint hive SQL statment..."
 
-创建表：
-需要创建一个结果表
-CREATE TABLE IF NOT EXISTS `stats_view_depth` (
-  `platform_dimension_id` int,
-  `data_dimension_id` int,
-  `kpi_dimension_id` int,
-  `pv1` int,
-  `pv2` int,
-  `pv3` int,
-  `pv4` int,
-  `pv5_10` int,
-  `pv10_30` int,
-  `pv30_60` int,
-  `pv60pluss` int,
-  `created` date,
-);
-
-
-创建临时表：
-CREATE TABLE IF NOT EXISTS `stats_view_depth_tmp` (
-  dt string,
-  pl string,
-  col string,
-  ct int
-);
-
-sql语句：
+## run hive sql
+hive --database default -e "
 from(
 select
 from_unixtime(case(l.s_time/1000 as bigint), 'yyyy-MM-dd') as dt,
@@ -62,8 +54,10 @@ select dt,pl,pv,count(distinct(uid)) as ct
 where uid is not null
 group by (dt,pl,pv)
 ;
+"
+;
 
-## 此时pv1……作为col的值，存储在col列中，要想根据col列值进行扩维，需要将每一个列值使用一条select语句查询出来，其中其它的列值按照一个默认值查询（即不能将其它的类值查询出来），然后进行union all
+hive --database default -e "
 with tmp as ()
 select
 dt,pl as pl, ct as pv1, 0 as pv2, 0 as pv3, 0 as pv4, 0 as pv5_10, 0 as pv10_30, 0 as pv_30_60, 0 as pv60pluss from stats_view_depth_tmp where ct = 'pv1' union all
@@ -89,44 +83,14 @@ insert overwrite table stats_view_depth
 select convert_date(dt),convert_platform(pl),3,sum(pv1),sum(pv2),sum(pv3),sum(pv4),sum(pv5_10),sum(pv10_30),sum(pv30_60),sum(pv60pluss),dt
 group by (dt, pl)
 ;
-
-sqoop语句
-sqoop export --connect jdbc:mysql://hadoop05:3306/result \
- --username root --password 123456 \
- --table stats_view_depth --export-dir hdfs://hadoop05:9000/home/hadoop/data/hivedata/hive/stats_view_depth/* \
- --input-fields-terminated-by '\\01' --update-mode allowinsert \
- --update-key   `platform_dimension_id`,`data_dimension_id`, `kpi_dimension_id`
- ;
-
-
-用户角度下的浏览深度
-
-
-
-将两个语句整合成一个
-with tmp as (
-select
-        from_unixtime(cast(l.s_time/1000 as bigint),"yyyy-MM-dd") as dt,
-        l.pl as pl,
-        l.u_ud as uid,
-        (case when count(l.p_url) = 1 then 1 else 0 end) as  pv1,
-        (case when count(l.p_url) = 2 then 1 else 0 end) as  pv2,
-        (case when count(l.p_url) = 3 then 1 else 0 end) as  pv3,
-        (case when count(l.p_url) = 4 then 1 else 0 end) as  pv4,
-        (case when count(l.p_url) >=5 and count(l.p_url) <10 then 1 else 0 end) as  pv5_10,
-        (case when count(l.p_url) >=10 and count(l.p_url) <30 then 1 else 0 end) as  pv10_30,
-        (case when count(l.p_url) >=30 and count(l.p_url) <60 then 1 else 0 end) as  pv30_60,
-        (case when count(l.p_url) >= 60 then 1 else 0 end) as pv60pluss
-from logs l
-where month = 08
-and day = 18
-and l.p_url <> 'null'
-and l.pl is not null
-group by from_unixtime(cast(l.s_time/1000 as bigint),"yyyy-MM-dd"),pl,u_ud
-)
-select dt,pl,sum(pv1),sum(pv2),sum(pv3),sum(pv4),sum(pv5_10),sum(pv10_30),sum(pv30_60),sum(pv60pluss) from tmp group by dt,pl
-union all
-select dt,"all" as pl,sum(pv1),sum(pv2),sum(pv3),sum(pv4),sum(pv5_10),sum(pv10_30),sum(pv30_60),sum(pv60pluss) from tmp group by dt
+"
 ;
 
+sqoop export --connect jdbc:mysql://hadoop05:3306/result \
+--username root --password 123456 \
+--table stats_view_depth --export-dir hdfs://hadoop05:9000/home/hadoop/data/hivedata/hive/stats_view_depth/* \
+--input-fields-terminated-by '\\01' --update-mode allowinsert \
+--update-key   `platform_dimension_id`,`data_dimension_id`, `kpi_dimension_id`
+;
 
+echo "the pv job is finished"

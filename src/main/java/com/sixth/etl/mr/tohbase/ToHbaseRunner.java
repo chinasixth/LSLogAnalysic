@@ -69,7 +69,7 @@ public class ToHbaseRunner implements Tool {
         // 1、通过job将文件缓存，新版的API可以不再设置符号链接了
         // 设置符号链接就是在路径的最后面加上一个#symlink，在mapper类中通过context.getSymlink()可以判断是否开启了创建符号链接
 //        job.addCacheFile(new URI());
-        // 2、在map阶段可以通过context拿到缓存数据，一般是在初始化的时候使用，也就是setUpf方法
+        // 2、在map阶段可以通过context拿到缓存数据，一般是在初始化的时候使用，也就是setUp方法
 //        context.getCacheFiles()和context.getLocalCacheFile()方法
 
         // 将文件加载到分布式缓存
@@ -78,7 +78,6 @@ public class ToHbaseRunner implements Tool {
         // 从分布式缓存中加载文件
 //        URI[] cacheFiles = DistributedCache.getCacheFiles(conf);
 //        Path[] localCacheFiles = DistributedCache.getLocalCacheFiles(conf);
-
         // 设置输入，FileInputFormat
         setInputPath(job, args);
         return job.waitForCompletion(true) ? 0 : 1;

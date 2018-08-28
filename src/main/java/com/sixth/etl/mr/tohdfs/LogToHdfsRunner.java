@@ -81,7 +81,7 @@ public class LogToHdfsRunner implements Tool {
     private void setInputOutputPath(Job job) {
         String date = job.getConfiguration().get(GlobalConstants.RUNNING_DATE);
         String fields[] = date.split("-");
-        Path inputPath = new Path("/logs/" + fields[1] + "/" + fields[2]);
+        Path inputPath = new Path("/logs/js/" + fields[1] + "/" + fields[2]);
         Path outputPath = new Path("/ods/month=" + fields[1] + "/day=" + fields[2]);
         try {
             FileSystem fs = FileSystem.get(conf);

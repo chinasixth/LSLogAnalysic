@@ -58,6 +58,12 @@ public class IDimensionConvertImpl implements IDimensionConvert {
             if (dimension instanceof EventDimension) {
                 sqls = buildEventSqls(dimension);
             }
+            if (dimension instanceof CurrencyTypeDimension) {
+                sqls = buildCurrencyTypeSqls(dimension);
+            }
+            if (dimension instanceof PaymentTypeDimension) {
+                sqls = buildPaymentTypeSqls(dimension);
+            }
             // 执行sql
             id = -1;
             synchronized (this) {
@@ -141,11 +147,30 @@ public class IDimensionConvertImpl implements IDimensionConvert {
                 ps.setString(++i, event.getCategory());
                 ps.setString(++i, event.getAction());
             }
+            if (dimension instanceof CurrencyTypeDimension) {
+                CurrencyTypeDimension currencyTypeDimension = (CurrencyTypeDimension) dimension;
+                ps.setString(++i, currencyTypeDimension.getCurrenctName());
+            }
+            if (dimension instanceof PaymentTypeDimension) {
+                PaymentTypeDimension paymentTypeDimension = (PaymentTypeDimension) dimension;
+                ps.setString(++i, paymentTypeDimension.getPaymentType());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    private String[] buildPaymentTypeSqls(BaseDimension dimension) {
+        String query = "select id from `dimension_payment_type` where `payment_type` = ?";
+        String insert = "insert into `dimension_payment_type`(`payment_type`) values(?)";
+        return new String[]{query, insert};
+    }
+
+    private String[] buildCurrencyTypeSqls(BaseDimension dimension) {
+        String query = "select id from `dimension_currency_type` where `currency_name` = ?";
+        String insert = "insert into `dimension_currency_type`(`currency_name`) values(?)";
+        return new String[]{query, insert};
+    }
     private String[] buildEventSqls(BaseDimension dimension) {
         String query = "select id from `dimension_event` where `category` = ? and `action` = ?";
         String insert = "insert into `dimension_event`(`category`,`action`) values(?,?)";
@@ -227,9 +252,19 @@ public class IDimensionConvertImpl implements IDimensionConvert {
         }
         if (dimension instanceof EventDimension) {
             EventDimension event = (EventDimension) dimension;
-            sb.append("local_");
+            sb.append("event_");
             sb.append(event.getCategory());
             sb.append(event.getAction());
+        }
+        if (dimension instanceof CurrencyTypeDimension) {
+            CurrencyTypeDimension currencyTypeDimension = (CurrencyTypeDimension) dimension;
+            sb.append("currencyType_");
+            sb.append(currencyTypeDimension.getCurrenctName());
+        }
+        if (dimension instanceof PaymentTypeDimension) {
+            PaymentTypeDimension paymentTypeDimension = (PaymentTypeDimension) dimension;
+            sb.append("paymentType_");
+            sb.append(paymentTypeDimension.getPaymentType());
         }
         return sb.toString();
     }
