@@ -2,12 +2,15 @@ package com.sixth.analysic.mr.pv;
 
 import com.sixth.analysic.model.dim.StatsCommonDimension;
 import com.sixth.analysic.model.dim.StatsUserDimension;
-import com.sixth.analysic.model.dim.base.*;
+import com.sixth.analysic.model.dim.base.BrowserDimension;
+import com.sixth.analysic.model.dim.base.DateDimension;
+import com.sixth.analysic.model.dim.base.KpiDimension;
+import com.sixth.analysic.model.dim.base.PlatformDimension;
 import com.sixth.analysic.model.dim.value.map.TimeOutputValue;
 import com.sixth.common.DateEnum;
 import com.sixth.common.EventLogConstants;
 import com.sixth.common.KpiType;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.mapreduce.TableMapper;
@@ -33,7 +36,7 @@ public class PVMapper extends TableMapper<StatsUserDimension, TimeOutputValue> {
     protected void map(ImmutableBytesWritable key, Result value, Context context) throws IOException, InterruptedException {
         String serverTime = Bytes.toString(value.getValue(family,
                 Bytes.toBytes(EventLogConstants.EVENT_COLUMN_NAME_SERVER_TIME)));
-        String url =  Bytes.toString(value.getValue(family,
+        String url = Bytes.toString(value.getValue(family,
                 Bytes.toBytes(EventLogConstants.EVENT_COLUMN_NAME_CURRENT_URL)));
         String platform = Bytes.toString(value.getValue(family,
                 Bytes.toBytes(EventLogConstants.EVENT_COLUMN_NAME_PLATFORM)));

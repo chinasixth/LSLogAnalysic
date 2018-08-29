@@ -6,10 +6,12 @@ import com.sixth.analysic.mr.IOutputWriterFormat;
 import com.sixth.common.EventLogConstants;
 import com.sixth.common.GlobalConstants;
 import com.sixth.util.TimeUtil;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.Scan;
-import org.apache.hadoop.hbase.filter.*;
+import org.apache.hadoop.hbase.filter.Filter;
+import org.apache.hadoop.hbase.filter.FilterList;
+import org.apache.hadoop.hbase.filter.MultipleColumnPrefixFilter;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.mapreduce.Job;
@@ -31,7 +33,7 @@ public class PVRunner implements Tool {
 
     @Override
     public int run(String[] args) throws Exception {
-        Configuration conf  = this.getConf();
+        Configuration conf = this.getConf();
         conf.addResource("writer-mapping.xml");
         conf.addResource("output-mapping.xml");
         conf.addResource("total-mapping.xml");
@@ -78,7 +80,7 @@ public class PVRunner implements Tool {
         scan.setAttribute(Scan.SCAN_ATTRIBUTES_TABLE_NAME, Bytes.toBytes(EventLogConstants.HBASE_TABLE_NAME));
         scan.setFilter(fl);
         List<Scan> li = new ArrayList<>();
-            li.add(scan);
+        li.add(scan);
         return li;
     }
 

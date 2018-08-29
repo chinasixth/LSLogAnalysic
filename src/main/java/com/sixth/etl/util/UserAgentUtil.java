@@ -2,7 +2,7 @@ package com.sixth.etl.util;
 
 import cz.mallat.uasparser.OnlineUpdater;
 import cz.mallat.uasparser.UASparser;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class UserAgentUtil {
 
-    private static final Logger logger =Logger.getLogger(UserAgentUtil .class);
+    private static final Logger logger = Logger.getLogger(UserAgentUtil.class);
 
     private static UASparser ua = null;
 

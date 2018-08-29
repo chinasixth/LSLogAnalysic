@@ -2,12 +2,15 @@ package com.sixth.analysic.mr.nu;
 
 import com.sixth.analysic.model.dim.StatsCommonDimension;
 import com.sixth.analysic.model.dim.StatsUserDimension;
-import com.sixth.analysic.model.dim.base.*;
+import com.sixth.analysic.model.dim.base.BrowserDimension;
+import com.sixth.analysic.model.dim.base.DateDimension;
+import com.sixth.analysic.model.dim.base.KpiDimension;
+import com.sixth.analysic.model.dim.base.PlatformDimension;
 import com.sixth.analysic.model.dim.value.map.TimeOutputValue;
 import com.sixth.common.DateEnum;
 import com.sixth.common.EventLogConstants;
 import com.sixth.common.KpiType;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.mapreduce.TableMapper;
@@ -51,7 +54,6 @@ public class NewUserMapper extends TableMapper<StatsUserDimension, TimeOutputVal
     private TimeOutputValue v = new TimeOutputValue();
     private KpiDimension newUserKpi = new KpiDimension(KpiType.NEW_USER.kpiName);
     private KpiDimension browserNewUserKpi = new KpiDimension(KpiType.BROWSER_NEW_USER.kpiName);
-
 
     @Override
     protected void map(ImmutableBytesWritable key, Result value, Context context)

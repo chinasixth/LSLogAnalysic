@@ -1,7 +1,7 @@
 package com.sixth.etl.util;
 
 import com.sixth.etl.util.ip.IPSeeker;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**

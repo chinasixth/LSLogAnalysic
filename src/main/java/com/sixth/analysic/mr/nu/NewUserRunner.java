@@ -1,8 +1,8 @@
 package com.sixth.analysic.mr.nu;
 
 import com.google.common.collect.Lists;
-import com.sixth.analysic.model.dim.base.DateDimension;
 import com.sixth.analysic.model.dim.StatsUserDimension;
+import com.sixth.analysic.model.dim.base.DateDimension;
 import com.sixth.analysic.model.dim.value.map.TimeOutputValue;
 import com.sixth.analysic.model.dim.value.reduce.TextOutputValue;
 import com.sixth.analysic.mr.IOutputWriterFormat;
@@ -13,7 +13,7 @@ import com.sixth.common.EventLogConstants;
 import com.sixth.common.GlobalConstants;
 import com.sixth.util.JdbcUtil;
 import com.sixth.util.TimeUtil;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.filter.*;
@@ -41,6 +41,7 @@ import java.util.Map;
 public class NewUserRunner implements Tool {
     private static final Logger LOGGER = Logger.getLogger(NewUserRunner.class);
     private Configuration conf = new Configuration();
+
     @Override
     public int run(String[] args) throws Exception {
         conf = this.getConf();
@@ -162,7 +163,7 @@ public class NewUserRunner implements Tool {
                 }
             }
             // 将map中的数据进行更新
-            ps = conn.prepareStatement(conf.get(GlobalConstants.TOTAL_PREFIX+"new_update_member"));
+            ps = conn.prepareStatement(conf.get(GlobalConstants.TOTAL_PREFIX + "new_update_member"));
             for (Map.Entry<String, Integer> entry : map.entrySet()) {
                 ps.setInt(1, nowDimensionId);
                 ps.setInt(2, Integer.parseInt(entry.getKey()));

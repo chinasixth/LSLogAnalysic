@@ -1,7 +1,7 @@
 package com.sixth.analysic.mr.nm;
 
-import com.sixth.analysic.model.dim.base.DateDimension;
 import com.sixth.analysic.model.dim.StatsUserDimension;
+import com.sixth.analysic.model.dim.base.DateDimension;
 import com.sixth.analysic.model.dim.value.map.TimeOutputValue;
 import com.sixth.analysic.model.dim.value.reduce.TextOutputValue;
 import com.sixth.analysic.mr.IOutputWriterFormat;
@@ -12,7 +12,7 @@ import com.sixth.common.EventLogConstants;
 import com.sixth.common.GlobalConstants;
 import com.sixth.util.JdbcUtil;
 import com.sixth.util.TimeUtil;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.filter.Filter;

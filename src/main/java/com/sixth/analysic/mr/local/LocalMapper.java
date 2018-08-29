@@ -10,7 +10,7 @@ import com.sixth.analysic.model.dim.value.map.LocalMapOutputValue;
 import com.sixth.common.DateEnum;
 import com.sixth.common.EventLogConstants;
 import com.sixth.common.KpiType;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.mapreduce.TableMapper;

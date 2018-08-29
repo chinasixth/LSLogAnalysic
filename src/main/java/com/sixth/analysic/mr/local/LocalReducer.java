@@ -8,7 +8,6 @@ import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

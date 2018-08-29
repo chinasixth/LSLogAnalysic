@@ -1,7 +1,7 @@
 package com.sixth.analysic.model.dim.base;
 
 import com.sixth.common.GlobalConstants;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.DataInput;
 import java.io.DataOutput;

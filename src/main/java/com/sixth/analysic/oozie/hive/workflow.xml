@@ -1,0 +1,20 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="lslda-hive-wf">
+    <start to="hive-en"/>
+    <action name="hive-en">
+        <shell xmlns="uri:oozie:shell-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>en.sh</exec>
+            <argument>-d</argument>
+            <argument>${running_date}</argument>
+            <file>en.sh</file>
+            <capture-output/>
+        </shell>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+    <kill name="fail">
+        <message>Shell action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

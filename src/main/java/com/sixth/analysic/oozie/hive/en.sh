@@ -29,7 +29,13 @@ dt=`date -d "1 day age" "+%y-%m-d%"`
 month=`date -d "$dt" "+%m"`
 day=`date -d "$dt" "+%d"`
 echo "running date is $dt, month is $month, day is $day"
-echo "runnint hive SQL statment..."
+echo "running hive SQL statment..."
+
+##加载分区的数据
+hive --database default -e "
+load data inpath'/ods/month=${month}/day=${day}' into table logs partition(month=${month},day=${day})
+"
+
 
 ## run hive sql
 hive --database default -e "

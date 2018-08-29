@@ -1,22 +1,29 @@
 <workflow-app xmlns="uri:oozie:workflow:0.2" name="java-main-wf">
-    <start to="java-node"/>
-    <action name="java-node">
+    <start to="mr-au"/>
+    <action name="mr-au">
         <java>
             <job-tracker>${jobTracker}</job-tracker>
             <name-node>${nameNode}</name-node>
-            <configuration>
-                <property>
-                    <name>mapred.job.queue.name</name>
-                    <value>${queueName}</value>
-                </property>
-            </configuration>
-            <main-class>org.apache.oozie.example.DemoJavaMain</main-class>
-            <arg>Hello</arg>
-            <arg>Oozie!</arg>
+            <main-class>com.sixth.analysic.mr.au.ActiveUserRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="mr-am"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-am">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.sixth.analysic.mr.am.ActiveMemberRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
         </java>
         <ok to="end"/>
         <error to="fail"/>
     </action>
+
     <kill name="fail">
         <message>Java failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
     </kill>

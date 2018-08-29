@@ -28,7 +28,7 @@ select
 l.pl as pl,
 l.ca as ca,
 l.ac as ac
-from_unixtime(case(l.s_time/1000 as bigint), "yyyy-MM-dd") as dt,
+from_unixtime(cast(l.s_time/1000 as bigint), "yyyy-MM-dd") as dt,
 where month = 8
 and day = 17
 and l.s_time in not null  // <>后面跟的是字符串，如：<> 'null'

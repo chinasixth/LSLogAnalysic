@@ -7,7 +7,7 @@ import com.sixth.analysic.mr.IOutputWriterFormat;
 import com.sixth.common.EventLogConstants;
 import com.sixth.common.GlobalConstants;
 import com.sixth.util.TimeUtil;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.filter.Filter;
@@ -125,7 +125,6 @@ public class SessionRunner implements Tool {
         setConf(this.conf);
         return this.conf;
     }
-
 
     public static void main(String[] args) {
         try {

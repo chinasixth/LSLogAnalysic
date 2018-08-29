@@ -1,7 +1,7 @@
 package com.sixth.analysic.model.dim.base;
 
 import com.sixth.common.GlobalConstants;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -30,6 +30,7 @@ public class PaymentTypeDimension extends BaseDimension {
         this(paymentType);
         this.id = id;
     }
+
     public static List<PaymentTypeDimension> buildList(String paymentType) {
         if (StringUtils.isEmpty(paymentType)) {
             paymentType = GlobalConstants.DEFAULT_VALUE;
@@ -39,6 +40,7 @@ public class PaymentTypeDimension extends BaseDimension {
         list.add(new PaymentTypeDimension(GlobalConstants.ALL_OF_VALUE));
         return list;
     }
+
     @Override
     public int compareTo(BaseDimension o) {
         if (this == o) {

@@ -1,11 +1,9 @@
 package com.sixth.analysic.hive;
 
 import com.sixth.analysic.model.dim.base.CurrencyTypeDimension;
-import com.sixth.analysic.model.dim.base.DateDimension;
 import com.sixth.analysic.mr.service.IDimensionConvert;
 import com.sixth.analysic.mr.service.impl.IDimensionConvertImpl;
 import com.sixth.common.CurrencyTypeEnum;
-import com.sixth.common.DateEnum;
 import com.sixth.util.TimeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.hive.ql.exec.UDF;

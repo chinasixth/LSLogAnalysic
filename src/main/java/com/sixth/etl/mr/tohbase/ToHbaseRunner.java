@@ -3,7 +3,7 @@ package com.sixth.etl.mr.tohbase;
 import com.sixth.common.EventLogConstants;
 import com.sixth.common.GlobalConstants;
 import com.sixth.util.TimeUtil;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;

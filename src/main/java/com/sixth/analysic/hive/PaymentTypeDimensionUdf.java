@@ -5,7 +5,7 @@ import com.sixth.analysic.mr.service.IDimensionConvert;
 import com.sixth.analysic.mr.service.impl.IDimensionConvertImpl;
 import com.sixth.common.PaymentTypeEnum;
 import com.sixth.util.TimeUtil;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hive.ql.exec.UDF;
 
 /**

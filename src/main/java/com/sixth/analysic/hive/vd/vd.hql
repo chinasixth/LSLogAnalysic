@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `stats_view_depth_tmp` (
 sql语句：
 from(
 select
-from_unixtime(case(l.s_time/1000 as bigint), 'yyyy-MM-dd') as dt,
+from_unixtime(cast(l.s_time/1000 as bigint), 'yyyy-MM-dd') as dt,
 l.pl as pl,
 l.u_ud as uid,
 (case
@@ -55,7 +55,7 @@ where month = 08
 and day = 20
 and l.p_url <> 'null'
 and l.pl is not null
-group by from_unixtime(case(l.s_time/1000 as bigint), 'yyyy-MM-dd'),l.pl,l.u_ud,
+group by from_unixtime(cast(l.s_time/1000 as bigint), 'yyyy-MM-dd'),l.pl,l.u_ud,
 ) as tmp
 insert overwrite table stats_view_depth_tmp
 select dt,pl,pv,count(distinct(uid)) as ct

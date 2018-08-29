@@ -1,7 +1,7 @@
 package com.sixth.util;
 
 import com.sixth.common.DateEnum;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

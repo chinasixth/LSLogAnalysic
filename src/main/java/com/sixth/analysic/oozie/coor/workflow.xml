@@ -1,0 +1,26 @@
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="one-op-wf">
+    <start to="sub-workflow-lsloganalysic-mr"/>
+    <action name="sub-workflow-lsloganalysic-mr">
+        <sub-workflow>
+            <app-path>${nameNode}${filePath}/mr</app-path>
+            <propagete-configuration/>
+        </sub-workflow>
+        <ok to="sub-workflow-lsloganalysic-hive"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="sub-workflow-lsloganalysic-hive">
+        <sub-workflow>
+            <app-path>${nameNode}${filePath}/hive</app-path>
+            <propagete-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+
+    <kill name="fail">
+        <message>Java failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
