@@ -35,35 +35,34 @@ echo "runnint hive SQL statment..."
 hive --database default -e "
 with tmp as(
 select
+from_unixtime(cast(l.s_time/1000 as bigint),'yyyy-MM-dd') as dt,
 l.pl as pl,
 l.ca as ca,
 l.ac as ac
-from_unixtime(case(l.s_time/1000 as bigint), 'yyyy-MM-dd') as dt,
-where month = "${month}"
-and day = "${day}"
-and l.s_time in not null
+from logs l
+where month = 8
+and day = 20
+and l.s_time <> 'null'
 )
-
 from (
-select dt as dt,pl as pl,ca as ca, ac as ac, count(1) ac ct from tmp group by dt,pl,ca,ac,union all
-select dt as dt,pl as pl,ca as ca, 'all' as ac, count(1) ac ct from tmp group by dt,pl,ca,union all
-
-select dt as dt,'all' as pl,ca as ca, ac as ac, count(1) ac ct from tmp group by dt,ca,ac,union all
-select dt as dt,'all' as pl,ca as ca, 'all' as ac, count(1) ac ct from tmp group by dt,ca
+select dt as dt,pl as pl,ca as ca,ac as ac,count(1) as ct from tmp group by dt,pl,ca,ac union all
+select dt as dt,pl as pl,ca as ca,'all' as ac,count(1) as ct from tmp group by dt,pl,ca union all
+select dt as dt,'all' as pl,ca as ca,ac as ac,count(1) as ct from tmp group by dt,ca,ac union all
+select dt as dt,'all' as pl,ca as ca,'all' as ac,count(1) as ct from tmp group by dt,ca
 ) as tmp1
-insert overwrite table
-select convert_date(dt),convert_platform(pl),convert_event(ca,ac),sum(ct),dt
+insert overwrite table stats_event
+select convert_platform(pl),convert_date(dt),convert_event(ca,ac),sum(ct),dt
 group by pl,dt,ca,ac
 ;
 "
-;
+
 
 ## run sqoop statment
 sqoop export --connect jdbc:mysql://hadoop05:3306/result \
 --username root --password 123456 \
---table stats_event --export-dir hdfs://hadoop05:9000/hive/stats_event/* \
---input-fields-terminated-by '\\01' --update-mode allowinsert \
---update-key date_dimension_id,platform_dimension_id,event_dimension_id
-;
+--table stats_event --export-dir 'hdfs://hadoop05:9000/home/hadoop/data/hivedata/hive/stats_event/*' \
+--input-fields-terminated-by "\\01" --update-mode allowinsert \
+--update-key platform_dimension_id,date_dimension_id,event_dimension_id
+
 
 echo "the event job is finished"

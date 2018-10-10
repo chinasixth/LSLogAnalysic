@@ -1,4 +1,4 @@
-<workflow-app xmlns="uri:oozie:workflow:0.4" name="lslda-hive-wf">
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="lsloganalysic-hive-wf">
     <start to="hive-en"/>
     <action name="hive-en">
         <shell xmlns="uri:oozie:shell-action:0.2">
